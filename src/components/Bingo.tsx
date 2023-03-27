@@ -1,16 +1,18 @@
 import styles from "@/styles/Home.module.css";
+import { useEffect, useState } from "react";
+
+function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 function generateRandomNumbersOfArray(count: number, min: number, max: number) {
-  const array: number[] = [];
-  while (array.length < count) {
-    const random = Math.floor(Math.random() * (max - min + 1) + min);
-    if (array.find((n) => n === random)) {
-      continue;
-    }
-    array.push(random);
-  }
+  const array = Array.from({ length: count }, (_, i) => i + 1 + min);
 
-  return array;
+  return shuffleArray(array);
 }
 
 /**
@@ -18,12 +20,19 @@ function generateRandomNumbersOfArray(count: number, min: number, max: number) {
  * @returns this components has bingo card
  */
 export function Bingo() {
-  // generate array of random number, array 5 items and it is froms 1 to 15
-  const b = generateRandomNumbersOfArray(5, 1, 15);
-  const i = generateRandomNumbersOfArray(5, 16, 30);
-  const n = generateRandomNumbersOfArray(5, 31, 45);
-  const g = generateRandomNumbersOfArray(5, 46, 60);
-  const o = generateRandomNumbersOfArray(5, 61, 75);
+  const [b, setB] = useState<number[]>([]);
+  const [i, setI] = useState<number[]>([]);
+  const [n, setN] = useState<number[]>([]);
+  const [g, setG] = useState<number[]>([]);
+  const [o, setO] = useState<number[]>([]);
+
+  useEffect(() => {
+    setB(generateRandomNumbersOfArray(5, 1, 15));
+    setI(generateRandomNumbersOfArray(5, 16, 30));
+    setN(generateRandomNumbersOfArray(5, 31, 45));
+    setG(generateRandomNumbersOfArray(5, 46, 60));
+    setO(generateRandomNumbersOfArray(5, 61, 75));
+  }, []);
 
   return (
     <div className={styles.bingoCardOuter}>

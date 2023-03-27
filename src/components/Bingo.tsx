@@ -10,9 +10,9 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function generateRandomNumbersOfArray(count: number, min: number, max: number) {
-  const array = Array.from({ length: count }, (_, i) => i + 1 + min);
+  const array = Array.from({ length: max - min }, (_, i) => i + 1 + min);
 
-  return shuffleArray(array);
+  return shuffleArray(array).splice(0, count);
 }
 
 /**
@@ -26,12 +26,16 @@ export function Bingo() {
   const [g, setG] = useState<number[]>([]);
   const [o, setO] = useState<number[]>([]);
 
-  useEffect(() => {
+  function generate() {
     setB(generateRandomNumbersOfArray(5, 1, 15));
     setI(generateRandomNumbersOfArray(5, 16, 30));
     setN(generateRandomNumbersOfArray(5, 31, 45));
     setG(generateRandomNumbersOfArray(5, 46, 60));
     setO(generateRandomNumbersOfArray(5, 61, 75));
+  }
+
+  useEffect(() => {
+    generate();
   }, []);
 
   return (

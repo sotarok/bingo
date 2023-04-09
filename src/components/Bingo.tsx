@@ -1,4 +1,4 @@
-import styles from "@/styles/Home.module.css";
+import styles from "./Bingo.module.css";
 import { useEffect, useState } from "react";
 
 function shuffleArray<T>(array: T[]): T[] {
